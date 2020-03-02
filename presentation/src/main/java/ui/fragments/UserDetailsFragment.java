@@ -35,14 +35,14 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    User user;
-
     @Inject
     UserDetailsPresenter userDetailsPresenter;
 
     public static UserDetailsFragment newInstance(User user) {
         UserDetailsFragment fragment = new UserDetailsFragment();
-        fragment.user = user;
+        Bundle args = new Bundle();
+        args.putSerializable("user", user);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -51,7 +51,7 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         this.getComponent(UserComponent.class).inject(this);
-        userDetailsPresenter.setUser(user);
+        userDetailsPresenter.setUser((User)getArguments().getSerializable("user"));
     }
 
 
@@ -80,12 +80,12 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
 
     @Override
     public void showTitle(String title) {
-        name.setText(user.getTitle());
+        name.setText(title);
     }
 
     @Override
     public void showImage(String url) {
-        Glide.with(getActivity()).load(user.getImage()).into(image);
+        Glide.with(getActivity()).load(url).into(image);
     }
 
     @Override

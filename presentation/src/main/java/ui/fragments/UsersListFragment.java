@@ -1,6 +1,7 @@
 package ui.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,10 +48,10 @@ public class UsersListFragment extends BaseFragment implements UserListView {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof UserListListener) {
-            this.userListListener = (UserListListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof UserListListener) {
+            this.userListListener = (UserListListener) context;
         }
     }
 
