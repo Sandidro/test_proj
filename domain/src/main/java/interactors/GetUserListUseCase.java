@@ -11,12 +11,12 @@ import model.User;
 import repository.UserRepository;
 
 
-public class GetUserList extends UseCase<List<User>, GetUserList.Params> {
+public class GetUserListUseCase extends UseCase<List<User>, GetUserListUseCase.Params> {
 
     private final UserRepository repository;
 
     @Inject
-    GetUserList(UserRepository userRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    GetUserListUseCase(UserRepository userRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.repository = userRepository;
     }

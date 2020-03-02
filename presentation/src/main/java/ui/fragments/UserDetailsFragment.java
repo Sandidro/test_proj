@@ -1,18 +1,19 @@
 package ui.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
@@ -32,8 +33,10 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.name) TextView name;
     @BindView(R.id.title) TextView toolbarTitle;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+
+    @BindView(R.id.loadingPanel) FrameLayout loadingPanel;
+    @BindView(R.id.scrollContainer) ScrollView scrollContainer;
 
     @Inject
     UserDetailsPresenter userDetailsPresenter;
@@ -41,7 +44,7 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     public static UserDetailsFragment newInstance(User user) {
         UserDetailsFragment fragment = new UserDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("user", user);
+        args.putSerializable("login", user.getTitle());
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +54,7 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         this.getComponent(UserComponent.class).inject(this);
-        userDetailsPresenter.setUser((User)getArguments().getSerializable("user"));
+        userDetailsPresenter.setUser(getArguments().getString("login"));
     }
 
 
@@ -73,10 +76,20 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userDetailsPresenter.setView(this);
-
-        userDetailsPresenter.init();
     }
 
+    @Override
+    public void showError(String error) {
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+                error, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    public void showContainer() {
+        loadingPanel.setVisibility(View.GONE);
+        scrollContainer.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void showTitle(String title) {

@@ -34,5 +34,12 @@ public class UserDataRepository implements UserRepository {
                 );
     }
 
+    @Override
+    public Observable<User> fetchUser(String login) {
+        return  NetworkService.getInstance().getGithubApi().getUser(login)
+                .subscribeOn(Schedulers.io())
+                .map(item -> userMapper.transform(item));
+    }
+
 
 }

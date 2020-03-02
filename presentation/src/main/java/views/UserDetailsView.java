@@ -12,4 +12,8 @@ public interface UserDetailsView {
 
     void showToolbarTitle(String title);
 
+    void showError(String error);
+
+    void showContainer();
+
 }

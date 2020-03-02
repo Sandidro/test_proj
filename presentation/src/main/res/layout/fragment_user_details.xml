@@ -49,6 +49,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:id="@+id/scrollContainer"
+        android:visibility="gone"
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -76,5 +78,21 @@
                 android:text="TextView" />
         </RelativeLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:indeterminateTint="@color/textBlack"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </FrameLayout>
 
 </RelativeLayout>

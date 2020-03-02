@@ -12,4 +12,8 @@ public interface RestApi {
 
     @GET("/users")
     Observable<List<UserPojo>> userList(@Query("since") int since);
+
+    @GET("/users/{login}")
+    Observable<UserPojo> getUser(@Path(value = "login") String login);
+
 }

@@ -5,24 +5,24 @@ import java.util.List;
 import javax.inject.Inject;
 
 import interactors.DefaultObserver;
-import interactors.GetUserList;
+import interactors.GetUserListUseCase;
 import model.User;
 import views.UserListView;
 
 public class UserListPresenter {
 
-    private GetUserList getUserList;
+    private GetUserListUseCase getUserListUseCase;
     private UserListView userListView;
 
     private int offset;
 
     @Inject
-    public UserListPresenter(GetUserList getUserList) {
-        this.getUserList = getUserList;
+    public UserListPresenter(GetUserListUseCase getUserListUseCase) {
+        this.getUserListUseCase = getUserListUseCase;
     }
 
     public void loadUsers() {
-        getUserList.execute(new UserListObserver(), GetUserList.Params.setSince(offset));
+        getUserListUseCase.execute(new UserListObserver(), GetUserListUseCase.Params.setSince(offset));
     }
 
     public void setView(UserListView userListView){
@@ -35,14 +35,17 @@ public class UserListPresenter {
 
     private final class UserListObserver extends DefaultObserver<List<User>> {
 
-        @Override public void onComplete() {
+        @Override
+        public void onComplete() {
         }
 
-        @Override public void onError(Throwable e) {
+        @Override
+        public void onError(Throwable e) {
             userListView.showError("Ошибка соединения");
         }
 
-        @Override public void onNext(List<User> users) {
+        @Override
+        public void onNext(List<User> users) {
             userListView.showUsers(users);
             offset += users.size();
         }

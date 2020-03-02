@@ -10,4 +10,6 @@ public interface UserRepository {
 
     Observable<List<User>> fetchUsers(int since);
 
+    Observable<User> fetchUser(String login);
+
 }
