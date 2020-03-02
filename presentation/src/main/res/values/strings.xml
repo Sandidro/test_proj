@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TestApplication</string>
+    <string name="network_error">Ошибка соединения</string>
+    <string name="contributors">Contributors</string>
+</resources>
